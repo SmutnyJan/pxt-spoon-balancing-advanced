@@ -15,13 +15,13 @@ namespace Balancovani {
     let y = 0
     let prevX = 0
     let prevY = 0
-    let souradnice: number[] = []
+    let aktualniSouradnice: number[] = []
 
     /**
     * Spustí hru a nastaví toleranci
     */
     //% block="Spusť hru s tolerancí %tolerance"
-    export function SpustitHru(tolerance: number): void {
+    export function spustitHru(tolerance: number): void {
         boundary = tolerance
         basic.showLeds(`
         . . . . .
@@ -39,7 +39,7 @@ namespace Balancovani {
     * Vrátí aktuální souřadnice
     */
     //% block="Souřadnice"
-    export function Souradnice(): number[] {
+    export function souradnice(): number[] {
         prevX = x
         prevY = y
         x = Math.floor(Math.map(input.rotation(Rotation.Roll), 0 - boundary, boundary, 0, 4) / 0.8)
@@ -48,10 +48,10 @@ namespace Balancovani {
             led.unplot(prevX, prevY)
             led.plot(x, y)
         }
-        souradnice[0] = x
-        souradnice[1] = 4 - y
+        aktualniSouradnice[0] = x
+        aktualniSouradnice[1] = 4 - y
 
-        return souradnice
+        return aktualniSouradnice
     }
 
 
