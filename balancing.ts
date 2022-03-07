@@ -1,28 +1,20 @@
-/**
- * Použijte tento soubor k definování personalizovaných funkcí a bloků.
- * Přečtěte si více na https://makecode.microbit.org/blocks/custom
- */
-
-
-/**
- * Custom blocks
- */
-//% weight=100 color=#1d1f1d icon="\uf24e"
+//% weight=100 color=#1d1f1d icon="\uf24e" block="Balancování"
 namespace Balancovani {
 
-    let boundary = 30
+    let okraje = 30
     let x = 0
     let y = 0
-    let prevX = 0
-    let prevY = 0
+    let predchoziX  = 0
+    let predchoziY = 0
     let aktualniSouradnice: number[] = []
 
     /**
     * Spustí hru a nastaví toleranci
+    * @tolerance Tolerance nakloňení a zrychlení
     */
     //% block="Spusť hru s tolerancí %tolerance"
     export function spustitHru(tolerance: number): void {
-        boundary = tolerance
+        okraje = tolerance
         basic.showLeds(`
         . . . . .
         . . . . .
@@ -30,8 +22,8 @@ namespace Balancovani {
         . . . . .
         . . . . .
         `)
-        x = Math.floor(Math.map(input.rotation(Rotation.Roll), 0 - boundary, boundary, 0, 4) / 0.8)
-        y = Math.floor(Math.map(input.rotation(Rotation.Pitch), 0 - boundary, boundary, 0, 4) / 0.8)
+        x = Math.floor(Math.map(input.rotation(Rotation.Roll), 0 - okraje, okraje, 0, 4) / 0.8)
+        y = Math.floor(Math.map(input.rotation(Rotation.Pitch), 0 - okraje, okraje, 0, 4) / 0.8)
         led.plot(x, y)
     }
 
@@ -40,12 +32,12 @@ namespace Balancovani {
     */
     //% block="Souřadnice"
     export function souradnice(): number[] {
-        prevX = x
-        prevY = y
-        x = Math.floor(Math.map(input.rotation(Rotation.Roll), 0 - boundary, boundary, 0, 4) / 0.8)
-        y = Math.floor(Math.map(input.rotation(Rotation.Pitch), 0 - boundary, boundary, 0, 4) / 0.8)
-        if (x != prevX || y != prevY) {
-            led.unplot(prevX, prevY)
+        predchoziX  = x
+        predchoziY = y
+        x = Math.floor(Math.map(input.rotation(Rotation.Roll), 0 - okraje, okraje, 0, 4) / 0.8)
+        y = Math.floor(Math.map(input.rotation(Rotation.Pitch), 0 - okraje, okraje, 0, 4) / 0.8)
+        if (x != predchoziX || y != predchoziY) {
+            led.unplot(predchoziX, predchoziY)
             led.plot(x, y)
         }
         aktualniSouradnice[0] = x
