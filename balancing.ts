@@ -15,10 +15,10 @@ namespace Balancovani {
     let aktualniSouradnice: number[] = []
 
     /**
-    * Spustí hru a nastaví toleranci
+    * Spustí hru s obtížností
     * @obtiznost Obtížnost hry
     */
-    //% block="Spusť hru s tolerancí %tolerance"
+    //% block="Spusť hru s obtížností %obtiznost"
     export function spustitHru(obtiznost: Difficulty): void {
         okraje = obtiznost
         basic.showLeds(`
