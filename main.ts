@@ -1,6 +1,6 @@
 input.onButtonPressed(Button.A, function () {
     jeHraSpustena = true
-    Balancovani.spustitHru(50)
+    Balancovani.spustitHru(Difficulty.Jednoducha)
 })
 let souradnice: number[] = []
 let jeHraSpustena = false

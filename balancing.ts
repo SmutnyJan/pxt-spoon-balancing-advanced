@@ -1,3 +1,9 @@
+enum Difficulty {
+    Jednoducha = 100,
+    Stredni = 50,
+    Tezka = 25,
+}
+
 //% weight=100 color=#1d1f1d icon="\uf24e" block="Balancování"
 namespace Balancovani {
 
@@ -10,11 +16,11 @@ namespace Balancovani {
 
     /**
     * Spustí hru a nastaví toleranci
-    * @tolerance Tolerance nakloňení a zrychlení
+    * @obtiznost Obtížnost hry
     */
     //% block="Spusť hru s tolerancí %tolerance"
-    export function spustitHru(tolerance: number): void {
-        okraje = tolerance
+    export function spustitHru(obtiznost: Difficulty): void {
+        okraje = obtiznost
         basic.showLeds(`
         . . . . .
         . . . . .
@@ -22,8 +28,8 @@ namespace Balancovani {
         . . . . .
         . . . . .
         `)
-        x = Math.floor(Math.map(input.rotation(Rotation.Roll), 0 - okraje, okraje, 0, 4) / 0.8)
-        y = Math.floor(Math.map(input.rotation(Rotation.Pitch), 0 - okraje, okraje, 0, 4) / 0.8)
+        x = Math.floor(Math.floor(Math.map(input.rotation(Rotation.Roll), -180 + (180 - okraje), 180 - (180 - okraje), -1, 5) / 0.8))
+        y = Math.floor(Math.floor(Math.map(input.rotation(Rotation.Pitch), -180 + (180 - okraje), 180 - (180 - okraje), -1, 5) / 0.8))
         led.plot(x, y)
     }
 
@@ -34,8 +40,8 @@ namespace Balancovani {
     export function souradnice(): number[] {
         predchoziX  = x
         predchoziY = y
-        x = Math.floor(Math.map(input.rotation(Rotation.Roll), 0 - okraje, okraje, 0, 4) / 0.8)
-        y = Math.floor(Math.map(input.rotation(Rotation.Pitch), 0 - okraje, okraje, 0, 4) / 0.8)
+        x = Math.floor(Math.map(input.rotation(Rotation.Roll), -180 + (180 - okraje), 180 - (180 - okraje), -1, 5) / 0.8)
+        y = Math.floor(Math.map(input.rotation(Rotation.Pitch), -180 + (180 - okraje), 180 - (180 - okraje), -1, 5) / 0.8)
         if (x != predchoziX || y != predchoziY) {
             led.unplot(predchoziX, predchoziY)
             led.plot(x, y)
