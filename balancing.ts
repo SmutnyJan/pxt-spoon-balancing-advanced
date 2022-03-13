@@ -47,7 +47,7 @@ namespace Balancovani {
             led.plot(x, y)
         }
         aktualniSouradnice[0] = x
-        aktualniSouradnice[1] = 4 - y
+        aktualniSouradnice[1] = y
 
         return aktualniSouradnice
     }
