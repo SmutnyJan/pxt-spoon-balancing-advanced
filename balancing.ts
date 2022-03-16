@@ -5,22 +5,22 @@ enum Difficulty {
 }
 
 //% weight=100 color=#1d1f1d icon="\uf24e" block="Balancování"
-namespace Balancovani {
+namespace balancing {
 
-    let okraje = 30
+    let boundary = 30
     let x = 0
     let y = 0
-    let predchoziX  = 0
-    let predchoziY = 0
-    let aktualniSouradnice: number[] = []
+    let previousX = 0
+    let previousY = 0
+    let currentCoordinates: number[] = []
 
     /**
     * Spustí hru s obtížností
-    * @obtiznost Obtížnost hry
+    * @difficulty Obtížnost hry
     */
-    //% block="Spusť hru s obtížností %obtiznost"
-    export function spustitHru(obtiznost: Difficulty): void {
-        okraje = obtiznost
+    //% block="Spusť hru s obtížností %difficulty"
+    export function playGame(difficulty: Difficulty): void {
+        boundary = difficulty
         basic.showLeds(`
         . . . . .
         . . . . .
@@ -28,8 +28,8 @@ namespace Balancovani {
         . . . . .
         . . . . .
         `)
-        x = Math.floor(Math.floor(Math.map(input.rotation(Rotation.Roll), -180 + (180 - okraje), 180 - (180 - okraje), -1, 5) / 0.8))
-        y = Math.floor(Math.floor(Math.map(input.rotation(Rotation.Pitch), -180 + (180 - okraje), 180 - (180 - okraje), -1, 5) / 0.8))
+        x = Math.floor(Math.floor(Math.map(input.rotation(Rotation.Roll), -180 + (180 - boundary), 180 - (180 - boundary), -1, 5) / 0.8))
+        y = Math.floor(Math.floor(Math.map(input.rotation(Rotation.Pitch), -180 + (180 - boundary), 180 - (180 - boundary), -1, 5) / 0.8))
         led.plot(x, y)
     }
 
@@ -37,19 +37,19 @@ namespace Balancovani {
     * Vrátí aktuální souřadnice
     */
     //% block="Souřadnice"
-    export function souradnice(): number[] {
-        predchoziX  = x
-        predchoziY = y
-        x = Math.floor(Math.map(input.rotation(Rotation.Roll), -180 + (180 - okraje), 180 - (180 - okraje), -1, 5) / 0.8)
-        y = Math.floor(Math.map(input.rotation(Rotation.Pitch), -180 + (180 - okraje), 180 - (180 - okraje), -1, 5) / 0.8)
-        if (x != predchoziX || y != predchoziY) {
-            led.unplot(predchoziX, predchoziY)
+    export function coordinates(): number[] {
+        previousX  = x
+        previousY = y
+        x = Math.floor(Math.map(input.rotation(Rotation.Roll), -180 + (180 - boundary), 180 - (180 - boundary), -1, 5) / 0.8)
+        y = Math.floor(Math.map(input.rotation(Rotation.Pitch), -180 + (180 - boundary), 180 - (180 - boundary), -1, 5) / 0.8)
+        if (x != previousX || y != previousY) {
+            led.unplot(previousX, previousY)
             led.plot(x, y)
         }
-        aktualniSouradnice[0] = x
-        aktualniSouradnice[1] = y
+        currentCoordinates[0] = x
+        currentCoordinates[1] = y
 
-        return aktualniSouradnice
+        return currentCoordinates
     }
 
 
